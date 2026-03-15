@@ -31,12 +31,28 @@ class ControlState:
 
 def render_sidebar() -> ControlState:
     """Render the sidebar and return the current control state."""
+    defaults = {
+        "company_size": "All",
+        "market_growth": 0.08,
+        "competition_level": 0.50,
+        "technology_disruption": 0.50,
+        "economic_pressure": 0.40,
+        "n_simulations": MONTE_CARLO_DEFAULT_RUNS,
+    }
+
     with st.sidebar:
         st.image(
             "https://img.icons8.com/fluency/96/artificial-intelligence.png",
             width=64,
         )
         st.title("⚙️ Control Panel")
+        st.caption("Tune the environment, then generate strategy recommendations.")
+
+        if st.button("↺ Reset to defaults", use_container_width=True):
+            for state_key, state_val in defaults.items():
+                st.session_state[state_key] = state_val
+            st.rerun()
+
         st.markdown("---")
 
         st.subheader("🏢 Company Filters")
@@ -44,6 +60,8 @@ def render_sidebar() -> ControlState:
             "Company Size",
             options=["All", "Small (<500)", "Medium (500–5k)", "Large (5k–50k)", "Enterprise (>50k)"],
             index=0,
+            key="company_size",
+            help="Filter analysis to a company-size band.",
         )
 
         st.markdown("---")
@@ -56,6 +74,7 @@ def render_sidebar() -> ControlState:
             value=0.08,
             step=0.01,
             format="%.2f",
+            key="market_growth",
             help="Annual market growth rate (0 = flat, 0.30 = 30% growth)",
         )
 
@@ -65,6 +84,7 @@ def render_sidebar() -> ControlState:
             max_value=1.0,
             value=0.50,
             step=0.05,
+            key="competition_level",
             help="Intensity of market competition (0 = none, 1 = extreme)",
         )
 
@@ -74,6 +94,7 @@ def render_sidebar() -> ControlState:
             max_value=1.0,
             value=0.50,
             step=0.05,
+            key="technology_disruption",
             help="Speed of technological change in the market",
         )
 
@@ -83,6 +104,7 @@ def render_sidebar() -> ControlState:
             max_value=1.0,
             value=0.40,
             step=0.05,
+            key="economic_pressure",
             help="Macro-economic headwinds (0 = benign, 1 = severe recession)",
         )
 
@@ -95,6 +117,7 @@ def render_sidebar() -> ControlState:
             max_value=MONTE_CARLO_MAX_RUNS,
             value=MONTE_CARLO_DEFAULT_RUNS,
             step=50,
+            key="n_simulations",
             help="Number of stochastic simulation runs (more = more accurate, slower)",
         )
 

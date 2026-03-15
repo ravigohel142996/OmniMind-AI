@@ -38,40 +38,127 @@ def _inject_css() -> None:
     st.markdown(
         """
         <style>
+        :root {
+            --om-bg: #070b14;
+            --om-bg-soft: #101a2b;
+            --om-surface: #111e33;
+            --om-card: #17233a;
+            --om-border: #2b3f5f;
+            --om-text: #e9f1ff;
+            --om-text-muted: #9fb2d0;
+            --om-primary: #4f8bf9;
+            --om-accent: #22d3ee;
+            --om-success: #34d399;
+        }
+
+        .stApp {
+            background: radial-gradient(circle at top right, #10213f 0%, var(--om-bg) 45%);
+            color: var(--om-text);
+        }
+
         /* Platform header */
         .omnimind-header {
-            background: linear-gradient(135deg, #0e1117 0%, #1a2744 100%);
-            border-bottom: 2px solid #4F8BF9;
+            background: linear-gradient(125deg, #0f1d34 0%, #1d3257 50%, #0f1d34 100%);
+            border: 1px solid var(--om-border);
+            box-shadow: 0 10px 30px rgba(4, 10, 22, 0.45);
             padding: 1.2rem 2rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
+            margin-bottom: 1.25rem;
+            border-radius: 14px;
         }
         .omnimind-header h1 {
-            color: #4F8BF9;
-            font-size: 2.2rem;
+            color: #dce9ff;
+            font-size: 2.1rem;
             margin: 0;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: .6px;
         }
         .omnimind-header p {
-            color: #8899aa;
-            margin: 0.3rem 0 0 0;
-            font-size: 1rem;
+            color: var(--om-text-muted);
+            margin: 0.35rem 0 0 0;
+            font-size: 0.98rem;
         }
+
         /* Metric cards */
         [data-testid="metric-container"] {
-            background-color: #1a2030;
-            border: 1px solid #2a3a50;
-            border-radius: 10px;
-            padding: 0.8rem;
+            background: linear-gradient(180deg, #1a2a46 0%, #152238 100%);
+            border: 1px solid var(--om-border);
+            border-radius: 12px;
+            padding: 0.85rem;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .02);
         }
+
         /* Section dividers */
         hr {
-            border-color: #2a3a50;
+            border-color: #20314f;
         }
-        /* Sidebar */
+
+        /* Sidebar shell */
         [data-testid="stSidebar"] {
-            background-color: #0d1117;
+            background: linear-gradient(180deg, #080e1a 0%, #0b1322 100%);
+            border-right: 1px solid #16243f;
+        }
+
+        [data-testid="stSidebar"] * {
+            color: var(--om-text);
+        }
+
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+        [data-testid="stSidebar"] .stCaption {
+            color: var(--om-text-muted);
+        }
+
+        /* Inputs */
+        .stSelectbox div[data-baseweb="select"] > div {
+            background-color: #15243d;
+            border: 1px solid #2c4469;
+            border-radius: 10px;
+        }
+
+        .stSlider [data-baseweb="slider"] > div > div {
+            background: linear-gradient(90deg, var(--om-primary), var(--om-accent));
+        }
+
+        .stSlider [role="slider"] {
+            background-color: var(--om-primary);
+            border-color: #c7d9ff;
+            box-shadow: 0 0 0 4px rgba(79, 139, 249, 0.2);
+        }
+
+        /* Buttons */
+        .stButton > button {
+            border-radius: 10px;
+            border: 1px solid #325184;
+            background: #13213a;
+            color: #eaf2ff;
+            transition: all .2s ease;
+        }
+
+        .stButton > button:hover {
+            transform: translateY(-1px);
+            border-color: #4f8bf9;
+            box-shadow: 0 6px 18px rgba(79, 139, 249, 0.22);
+        }
+
+        .stButton > button[kind="primary"] {
+            background: linear-gradient(90deg, #2d67d1 0%, #3d84ff 100%);
+            border-color: #77a8ff;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Tabs */
+        [data-testid="stTabs"] [role="tab"] {
+            background: #0f1a2d;
+            border: 1px solid #233858;
+            border-radius: 8px 8px 0 0;
+            margin-right: 0.25rem;
+            color: #c7d9fb;
+        }
+
+        [data-testid="stTabs"] [aria-selected="true"] {
+            background: #193056;
+            border-color: #4f8bf9;
+            color: #ffffff;
         }
         </style>
         """,
