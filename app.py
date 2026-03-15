@@ -168,11 +168,16 @@ def main() -> None:
     growth_model, risk_model, hiring_model = _train_models(df_json)
 
     # ── Market environment ────────────────────────────────────────────────────────
+    # global_demand is inversely proportional to economic_pressure:
+    # strong pressure halves demand; the relationship is clamped to [0, 1].
+    _DEMAND_PRESSURE_FACTOR: float = 0.5
     market = MarketEnvironment(
         economic_pressure=controls.economic_pressure,
         technology_disruption=controls.technology_disruption,
         market_growth_rate=controls.market_growth,
-        global_demand=max(0.0, min(1.0, 1 - controls.economic_pressure * 0.5)),
+        global_demand=max(
+            0.0, min(1.0, 1 - controls.economic_pressure * _DEMAND_PRESSURE_FACTOR)
+        ),
     )
 
     # ── Enrich company data with model scores ─────────────────────────────────────

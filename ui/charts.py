@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
-from config import CHART_HEIGHT, CHART_TEMPLATE
+from config import CHART_HEIGHT, CHART_TEMPLATE, RANDOM_SEED
 
 
 # ── Radar chart ────────────────────────────────────────────────────────────────
@@ -285,7 +285,7 @@ def mc_growth_cone(mc_result) -> go.Figure:
     the simulation horizon.
     """
     rounds = list(range(1, 13))
-    rng = np.random.default_rng(99)
+    rng = np.random.default_rng(RANDOM_SEED)
     # Build a simple fan from the MC summary
     mean_path = np.linspace(mc_result.growth_mean * 0.8, mc_result.growth_mean, 12)
     p5_path = np.linspace(mc_result.growth_p5 * 0.7, mc_result.growth_p5, 12)

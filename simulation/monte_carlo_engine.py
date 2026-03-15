@@ -62,6 +62,11 @@ class MonteCarloEngine:
         Random seed for reproducibility.
     """
 
+    # Perturbation standard deviations — tune these to widen/narrow the
+    # simulated uncertainty bands.
+    _GROWTH_NOISE_STD: float = 0.08
+    _RISK_NOISE_STD: float = 0.06
+
     def __init__(
         self,
         n_runs: int = MONTE_CARLO_DEFAULT_RUNS,
@@ -96,8 +101,8 @@ class MonteCarloEngine:
         n = self.n_runs
 
         # Perturb base estimates with Gaussian noise
-        growth_noise = self.rng.normal(0, 0.08, size=n)
-        risk_noise = self.rng.normal(0, 0.06, size=n)
+        growth_noise = self.rng.normal(0, self._GROWTH_NOISE_STD, size=n)
+        risk_noise = self.rng.normal(0, self._RISK_NOISE_STD, size=n)
 
         # Market opportunity / threat adjustments
         market_boost = market.opportunity_index * self.rng.uniform(0, 0.15, size=n)

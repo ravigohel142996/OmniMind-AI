@@ -54,7 +54,9 @@ def generate_companies(
 
     industries = rng.choice(INDUSTRIES, size=n, replace=True)
 
-    # Employee count — log-normal distribution
+    # Employee count — log-normal distribution.
+    # mean=7.5 ≈ e^7.5 ≈ 1 800 (median), sigma=1.4 gives a realistic
+    # range from ~10 (small start-ups) to ~500 000 (large enterprises).
     employees = (rng.lognormal(mean=7.5, sigma=1.4, size=n)).astype(int)
     employees = np.clip(employees, 10, 500_000)
 

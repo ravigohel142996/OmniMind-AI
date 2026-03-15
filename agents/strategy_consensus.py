@@ -110,10 +110,18 @@ class StrategyConsensus:
             sum(r.confidence * w for r, w in zip(recommendations, weights))
         )
 
-        # ROI estimate: blend MC result with consensus signal
+        # ROI blending weights:
+        #   MC_WEIGHT  — share of the Monte Carlo mean ROI in the final estimate
+        #   CONS_WEIGHT — share contributed by the consensus signal
+        #   CONS_MULT   — scales the consensus signal to a comparable ROI range
+        _MC_WEIGHT: float = 0.60
+        _CONS_WEIGHT: float = 0.40
+        _CONS_MULT: float = 2.0
+
         consensus_signal = strategy_scores[best_strategy]
         expected_roi = float(
-            mc_roi_mean * 0.60 + consensus_signal * 0.40 * mc_roi_mean * 2
+            mc_roi_mean * _MC_WEIGHT
+            + consensus_signal * _CONS_WEIGHT * mc_roi_mean * _CONS_MULT
         )
 
         return ConsensusResult(

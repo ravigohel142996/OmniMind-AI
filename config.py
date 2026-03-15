@@ -12,7 +12,11 @@ PLATFORM_VERSION: str = "1.0.0"
 
 # ── Dataset ────────────────────────────────────────────────────────────────────
 NUM_COMPANIES: int = 120
-RANDOM_SEED: int = 42
+# RANDOM_SEED is used throughout the platform for reproducible company generation,
+# model training, and Monte Carlo runs.  Override via environment variable if needed:
+#   export OMNIMIND_SEED=123
+import os as _os
+RANDOM_SEED: int = int(_os.environ.get("OMNIMIND_SEED", 42))
 
 # ── Industries ─────────────────────────────────────────────────────────────────
 INDUSTRIES: list[str] = [
